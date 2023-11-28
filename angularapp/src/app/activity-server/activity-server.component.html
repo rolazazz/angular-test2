@@ -1,0 +1,78 @@
+<h1>Activities</h1>
+
+<p>
+  This component demonstrates fetching data from the server.<br />
+  Aggregate selecting properties below.
+</p>
+
+<p *ngIf="!activities"><em>Loading...</em></p>
+
+<div>Selected one or more aggration...</div>
+
+<div class="row">
+  <div class="col">
+    <select multiple [(ngModel)]="selectedAggregations" (change)="getActivities()">
+      <option *ngFor="let agg of aggregations" [ngValue]="agg">{{agg}}</option>
+    </select>
+  </div>
+  <div class="col">
+    <mat-form-field>
+      <mat-label>Selected one or more aggration</mat-label>
+      <mat-select [(value)]="selectedAggregations" (selectionChange)="getActivities()" [sortComparator]="noCompareFunction" multiple>
+        <mat-option *ngFor="let agg of aggregations" [value]="agg">{{agg}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+<code>selected items: {{selectedAggregations}}</code>
+
+<hr />
+
+<h3>Results using Angular Material table</h3>
+<table mat-table [dataSource]="activities" class="table mat-elevation-z8">
+  <!-- table dynamic columns -->
+  <ng-container matColumnDef="project">
+    <mat-header-cell *matHeaderCellDef>Project</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{row.project?.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="employee">
+    <mat-header-cell *matHeaderCellDef>Employee</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{row.employee?.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{row.date | date:'dd MMM y'}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="hours">
+    <mat-header-cell *matHeaderCellDef>Hours</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{row.hours}}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+</table>
+
+<h3>Results using as simple table</h3>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="activities">
+  <tbody>
+    <!-- Since *ngFor can't do anything with an Observable, use the pipe | character followed by async.
+    This identifies Angular's AsyncPipe and subscribes to an Observable automatically so you won't have to do so in the component class.
+    https://angular.io/tutorial/tour-of-heroes/toh-pt6 -->
+    <tr>
+      <th>Project</th>
+      <th>Employee</th>
+      <th>Date</th>
+      <th>Hours</th>
+    </tr>
+    <tr *ngFor="let activity of activities">
+      <td>{{ activity.project?.name }}</td>
+      <td>{{ activity.employee?.name }}</td>
+      <td>{{ activity.date | date:'dd MMM y' }}</td>
+      <td>{{ activity.hours }}</td>
+    </tr>
+  </tbody>
+</table>

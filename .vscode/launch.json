@@ -1,0 +1,34 @@
+{
+"version": "0.2.0",
+  "compounds": [
+    {
+      "name": ".Net+Browser",
+      "configurations": [".NET Core Start", "Launch Chrome"]
+    }
+  ],
+  "configurations": [
+
+    {
+      "name": ".NET Core Start",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      // If you have changed target frameworks, make sure to update the program path.
+      "program": "${workspaceFolder}/webapi/bin/Debug/net7.0/webapi.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/webapi",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    {
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "chrome",
+      "sourceMaps": true,
+      "url": "https://localhost:4200",
+      "webRoot": "${workspaceFolder}/angularapp"
+    }
+  ]
+}
